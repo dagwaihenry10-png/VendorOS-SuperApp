@@ -1,7 +1,5 @@
 name: Build VendorOS APK
-on:
-  push:
-    branches: [ main ]
+on: [push]
 
 jobs:
   build:
@@ -10,26 +8,31 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Gradle 8.7 FORCE
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Show files (debug)
+        run: |
+          ls -la
+          cat gradle/wrapper/gradle-wrapper.properties
+          cat settings.gradle.kts
+
+      - name: Setup Gradle 8.7
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
-          cache-disabled: true
 
-      - name: Clean old cache
-        run: rm -rf ~/.gradle/caches && rm -rf .gradle
-
-      - name: Build APK
-        run: gradle assembleDebug --no-daemon
+      - name: Build Debug APK
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: VendorOS-APK-7081
+          name: VendorOS-APK
           path: app/build/outputs/apk/debug/*.apk
