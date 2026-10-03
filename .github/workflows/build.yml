@@ -1,12 +1,12 @@
-name: Build Web App
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npm run build
+{
+  "name": "vendoros-superapp",
+  "version": "1.0.0",
+  "description": "VendorOS SuperApp",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'Build script here'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
