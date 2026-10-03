@@ -1,37 +1,37 @@
-name: Build Android APK
+name: Build VendorOS APK
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v6
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: '21'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Make Gradle executable
-        run: chmod +x android/gradlew
+      - name: Make gradlew executable
+        run: chmod +x gradlew || echo "no gradlew file, using gradle"
 
-      - name: Build APK
-        working-directory: android
-        run: ./gradlew assembleDebug
+      - name: Build APK with Gradle
+        run: |
+          if [ -f "./gradlew" ]; then
+            ./gradlew assembleDebug
+          else
+            gradle assembleDebug
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: android/app/build/outputs/apk/debug/*.apk
+          name: VendorOS-APK-7081
+          path: app/build/outputs/apk/debug/*.apk
