@@ -1,0 +1,6 @@
+{
+  "name": "VendorOS",
+  "description": "VendorOS - Auto Reply, Trust Proofs & Handwork Marketplace 3-in-1 super app for Nigerian vendors and artisans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
