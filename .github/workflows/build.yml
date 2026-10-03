@@ -1,12 +1,19 @@
 {
   "name": "vendoros-superapp",
   "version": "1.0.0",
-  "description": "VendorOS SuperApp",
-  "main": "index.js",
+  "description": "VendorOS SuperApp - 3-in-1 Dashboard with 7081****44 Secure Payment",
+  "type": "module",
   "scripts": {
-    "build": "echo 'Build script here'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0"
+  }
 }
