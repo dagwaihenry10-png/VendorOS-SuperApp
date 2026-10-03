@@ -1,5 +1,4 @@
 name: Build VendorOS APK
-
 on:
   push:
     branches: [ main ]
@@ -16,21 +15,20 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Gradle
+      - name: Setup Gradle 8.7 FORCE
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.7
+          cache-disabled: true
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew || echo "no gradlew file, using gradle"
+      - name: Clean old cache
+        run: rm -rf ~/.gradle/caches && rm -rf .gradle
 
-      - name: Build APK with Gradle
-        run: |
-          if [ -f "./gradlew" ]; then
-            ./gradlew assembleDebug
-          else
-            gradle assembleDebug
-          fi
+      - name: Build APK
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: VendorOS-APK-7081
